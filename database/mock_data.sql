@@ -5,6 +5,17 @@ VALUES (
     'slindile.zondo@properties.co.za', 
     '11111111-1111-1111-1111-111111111111', 
     'HR_Admin', 
+    65000.00, 
+    0.00
+);
+
+INSERT INTO employees (first_name, last_name, email, cognito_sub, role, base_salary, hourly_rate)
+VALUES (
+    'Sandile', 
+    'Ngwenya', 
+    'sandile.ngwenya@properties.co.za', 
+    '11111111-1111-1111-1111-111111111111', 
+    'Site Manager', 
     60000.00, 
     0.00
 );
@@ -16,7 +27,7 @@ VALUES (
     'robby.smith@zproperties.co.za', 
     '22222222-2222-2222-2222-222222222222', 
     'Senior manager', 
-    0.00, 
+    800000, 
     25.50
 );
 
