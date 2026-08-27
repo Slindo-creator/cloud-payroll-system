@@ -2,7 +2,7 @@ INSERT INTO employees (first_name, last_name, email, cognito_sub, role, base_sal
 VALUES (
     'Slindile', 
     'Zondo', 
-    'slindile.zondo@company.com', 
+    'slindile.zondo@properties.co.za', 
     '11111111-1111-1111-1111-111111111111', 
     'HR_Admin', 
     60000.00, 
@@ -13,20 +13,30 @@ INSERT INTO employees (first_name, last_name, email, cognito_sub, role, base_sal
 VALUES (
     'Robby', 
     'Smith', 
-    'robby.smith@company.com', 
+    'robby.smith@zproperties.co.za', 
     '22222222-2222-2222-2222-222222222222', 
-    'Employee', 
+    'Senior manager', 
     0.00, 
     25.50
 );
 
 INSERT INTO timecards (employee_id, pay_period_start, pay_period_end, regular_hours_worked, overtime_hours_worked, is_approved)
 VALUES (
-    (SELECT id FROM employees WHERE email = 'slindile.zondo@company.com'),
+    (SELECT id FROM employees WHERE email = 'slindile.zondo@properties.co.za'),
     '2026-03-01',
     '2026-03-14',
     80.00,
     10.50,
+    TRUE
+);
+
+INSERT INTO timecards (employee_id, pay_period_start, pay_period_end, regular_hours_worked, overtime_hours_worked, is_approved)
+VALUES (
+    (SELECT id FROM employees WHERE email = 'robby.smith@zproperties.co.za'),
+    '2026-04-01',
+    '2026-04-14',
+    120.00,
+    14.50,
     TRUE
 );
 
