@@ -6,11 +6,11 @@ def get_db_connection():
     """Connects using system environment variables with an automatic local fallback."""
     try:
         return psycopg2.connect(
-            host=os.environ.get("DB_HOST", "payroll-db.c8jywgqc8s6z.us-east-1.rds.amazonaws.com"),
-            database=os.environ.get("DB_NAME", "postgres"),
-            user=os.environ.get("DB_USER", "postgres"),
-            password=os.environ.get("DB_PASSWORD", "PasswordDatabase432"),
-            sslmode="require" # Mandatory for secure AWS streaming data
+            host="payroll-db.c8jywgqc8s6z.us-east-1.rds.amazonaws.com",
+            database="postgres",
+            user="postgres",
+            password="PasswordDatabase432",
+            sslmode="require"e AWS streaming data
         )
     except psycopg2.OperationalError as e:
         print(f" Database connection failed: {e}")
