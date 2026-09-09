@@ -40,7 +40,7 @@ def calculate_and_save_payroll():
             # 2. Logic for Salaried Employees (Hourly rate is exactly zero)
             if float(hourly_rate) == 0.00:
                 gross_pay = float(base_salary) / 12.0
-                print(f"💼 Salaried [{role}]: {first_name} {last_name} | Monthly Gross: R{gross_pay:.2f}")
+                print(f"Salaried [{role}]: {first_name} {last_name} | Monthly Gross: R{gross_pay:.2f}")
             
             # 3. Logic for Hourly Employees (Pulls approved timecard metrics)
             else:
