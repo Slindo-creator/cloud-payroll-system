@@ -1,24 +1,41 @@
 import os
+import sys
 
 import psycopg2
 
 
 def get_db_connection():
-    return psycopg2.connect(
-        host="localhost",
-        database="payroll_db",
-        user="postgres",
-        password="Slindo04" 
-    )
+    """
+    Connects to the database using environment variables.
+    If variables are missing, it safely falls back to your local settings.
+    """
+    try:
+        return psycopg2.connect(
+            # On AWS, these look for the cloud credentials. On your PC, they use the defaults.
+            host=os.environ.get("DB_HOST", "localhost"),
+            database=os.environ.get("DB_NAME", "payroll_db"),
+            user=os.environ.get("DB_USER", "postgres"),
+            password=os.environ.get("DB_PASSWORD", "Slindo04"),
+            port=os.environ.get("DB_PORT", "5432")
+        )
+    except psycopg2.OperationalError as e:
+        print(f"❌ Database connection failed! Check your credentials.\nError: {e}")
+        sys.exit(1)
     
 def calculate_and_save_payroll():
+    conn = None
+    cur = None
     try:
         conn = get_db_connection()
         cur = conn.cursor()
         
-    # Fetch all employees from the database
+        # 1. Fetch all employees from the database
         cur.execute("SELECT id, first_name, last_name, base_salary, hourly_rate FROM employees;")
         employees = cur.fetchall()
+        
+        if not employees:
+            print("⚠️ No employees found in the database.")
+            return
         
         print(f"--- Starting Payroll Process for {len(employees)} Employees ---")
         
@@ -64,11 +81,17 @@ def calculate_and_save_payroll():
         conn.commit()
         print("--- Payroll Completed and Logged to Ledger Successfully! ---")
         
-        cur.close()
-        conn.close()
-        
     except Exception as e:
-        print(f"Error processing payroll calculation: {str(e)}")
+        print(f"❌ Error processing payroll calculation: {str(e)}")
+        if conn:
+            conn.rollback() # Safely undo changes if something breaks mid-loop
+            
+    finally:
+        # Guarantee that connections close even if an error occurs
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
 
 if __name__ == "__main__":
     calculate_and_save_payroll()
