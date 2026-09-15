@@ -1,3 +1,4 @@
+cat > check_db.py << 'EOF'
 import psycopg2
 
 conn = psycopg2.connect(
@@ -5,12 +6,15 @@ conn = psycopg2.connect(
     database='postgres',
     user='postgres',
     password='PasswordDatabase432',
-    port=5432
+    sslmode='require'
 )
 cur = conn.cursor()
+cur.execute('SELECT current_database(), inet_server_addr();')
+print('Connected to:', cur.fetchone())
 cur.execute('SELECT count(*) FROM employees;')
-print('Local employee count:', cur.fetchone())
+print('Employee count:', cur.fetchone())
 cur.execute('SELECT id, first_name, last_name, role FROM employees ORDER BY id;')
 for row in cur.fetchall():
     print(row)
 conn.close()
+EOF
