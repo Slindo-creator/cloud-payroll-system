@@ -10,7 +10,7 @@ def get_db_connection():
             database="postgres",
             user="postgres",
             password="PasswordDatabase432",
-            sslmode="require"e AWS streaming data
+            sslmode="require"
         )
     except psycopg2.OperationalError as e:
         print(f" Database connection failed: {e}")
