@@ -112,3 +112,5 @@ for obj in response.get('Contents', []):
 - Credentials are injected via environment variables, never committed to source control.
 - Database connections require SSL (`sslmode='require'`).
 - The S3-uploading IAM user should be scoped to only the permissions it needs (`s3:PutObject`, `s3:GetObject`) on the specific bucket, rather than full account access.
+
+verification code - WTC-TZZR6J2F
